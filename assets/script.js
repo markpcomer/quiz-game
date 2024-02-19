@@ -51,11 +51,8 @@ var intro = document.querySelector("#intro");
 var questionEl = document.querySelector("#question");
 var choicesEl = document.querySelector("#choices");
 var resultEl = document.querySelector("#result");
+
 var timerEl = document.querySelector("#timer");
-
-// var count;
-// Remember: count++ or count--
-
 var timer = 15;
 var questionIndex = 0;
 var score = 0;
@@ -71,40 +68,23 @@ function startTimer() {
   }, 1000);
 }
 
-// Timer from Module 4.9
-/* function setTime() {
-  // Sets interval in variable
-  var timerInterval = setInterval(function() {
-    secondsLeft--;
-    timeEl.textContent = secondsLeft + " seconds left till colorsplosion.";
-
-    if(secondsLeft === 0) {
-      // Stops execution of action at set interval
-      clearInterval(timerInterval);
-      // Calls function to create and append image
-      sendMessage();
-    }
-
-  }, 1000);
-} 
-*/
-
 function startGame() {
   intro.setAttribute("class", "hide");
-  updateQuestion();
   questions.setAttribute("class", "show");
   timerEl.setAttribute("class", "show");
+  updateQuestion();
   startTimer();
 }
 
 function updateQuestion() {
+  choicesEl.innerHTML = " ";
+  resultEl.innerHTML = " ";
     if (questionIndex === question.length) {
-        setTimeout(endGame, 1500);
+        setTimeout(endGame);
         return;
     }
     questionEl.textContent = question[questionIndex].question;
-    choicesEl.innerHTML = " ";
-    resultEl.innerHTML = " ";
+
     for(var i = 0; i < question[questionIndex].choices.length; i++){
         var element = document.createElement("li");
         element.textContent = question[questionIndex].choices[i];
@@ -112,10 +92,11 @@ function updateQuestion() {
     }
 }
 
+
 function endGame() {
     questions.setAttribute("class", "hide");
     timerEl.setAttribute("class", "hide");
-    resultEl.textContent = "You win this time. Now, look after Mr. Bond. See that some harm comes to him...";
+    resultEl.textContent = `Oh Mr. Bond, your final score is ${score}.`; 
 }
 
 choicesEl.addEventListener("click", function (event) {
@@ -133,7 +114,7 @@ choicesEl.addEventListener("click", function (event) {
 
     questionIndex++;
 
-    setTimeout(updateQuestion, 1500);
+    setTimeout(updateQuestion, 1000);
   }
 });
 

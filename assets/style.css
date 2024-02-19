@@ -5,6 +5,10 @@
 }
 
 html{
+    font-family: "Comfortaa", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
 
 }
 
@@ -26,14 +30,12 @@ nav{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: auto;
+    width: fit-content;
     margin-top: 20px;
+    text-align: center;
 }
 
-#intro{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-}
 
 h1{
     font-size: 1.5em;
@@ -43,6 +45,13 @@ h2{
     margin-bottom: 15px;
 }
 
+h3{
+    font-size: 1em;
+}
+
+p{
+    margin: 2% 0;
+}
 
 ul{
     margin: 20px;
@@ -55,14 +64,14 @@ li{
 
 button{
     background-color: var(--main-purple);
-    float: left;
     color: var(--white);
     margin-top: 5px;
+    font-size: 20px;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: default;
     border: none;
-    align-self: center;
+    width: fit-content;
 }
 
 #choices li{
@@ -79,8 +88,9 @@ button{
 #choices li:hover{
     transition: 0.1s ease;
     background-color: var(--light-purple);
-    
 }
+
+
 
 .hide{
     display: none;
