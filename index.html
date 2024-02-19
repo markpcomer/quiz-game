@@ -7,16 +7,35 @@
     <title>Quiz Game</title>
 </head>
 <body>
-    <div id="timer" class="">You have 15 Seconds, Mr. Bond</div>
-    <section id="intro">
-        <h1>Welcome to the 007 Quiz Game</h1>
-        <button id="start-game">Begin Your Mission</button>
-    </section>
-    <div id="questions" class="hide">
-        <h2 id="question"></h2>
-        <ul id="choices"></ul>
+    <header>
+        <nav>
+            <a id="high-score" class="nav-item-left">High Scores</a>
+            <div id="timer" class="nav-item-right">You have 15 Seconds, Mr. Bond</div>
+        </nav>
+    </header>
+    <div id="container">
+        <section id="intro">
+            <h1>Welcome to the 007 Quiz Game</h1>
+            <p>Good evening, Mr. Bond. I give you a test. Answer my questions before the clock runs out.<strong><br><i>OR ELSE...</i></strong></p>
+            <button id="start-game">Begin Your Mission</button>
+        </section>
+        <div id="questions" class="hide">
+            <h2 id="question"></h2>
+            <ul id="choices"></ul>
+        </div>
+        <div id="result"></div>
     </div>
-    <div id="result"></div>
     <script src="./assets/script.js"></script>
 </body>
 </html>
+
+<!--
+    startButton = startGameEl;
+    listedOptions = questions;
+    timer = timerEl;
+    createUl = 
+
+    https://icons8.com/icon/AQBfld39W8z8/james-bond
+    Cursor made by www.icons8.com
+
+-->

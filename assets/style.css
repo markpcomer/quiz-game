@@ -1,3 +1,87 @@
+:root{
+    --light-purple: rgb(122, 89, 153);
+    --main-purple: rgb(109, 60, 155);
+    --white: rgb(246, 244, 248);
+}
+
+html{
+
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-weight: bolder;
+    color: var(--main-purple);
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#intro{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+h1{
+    font-size: 1.5em;
+}
+
+h2{
+    margin-bottom: 15px;
+}
+
+
+ul{
+    margin: 20px;
+}
+
+li{
+    list-style-type: none;
+
+}
+
+button{
+    background-color: var(--main-purple);
+    float: left;
+    color: var(--white);
+    margin-top: 5px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: default;
+    border: none;
+    align-self: center;
+}
+
+#choices li{
+    background-color: var(--main-purple);
+    color: var(--white);
+    margin: 20px;
+    padding: 5px;
+    width: fit-content;
+    border-radius: 5px;
+    cursor: default;
+
+}
+
+#choices li:hover{
+    transition: 0.1s ease;
+    background-color: var(--light-purple);
+    
+}
+
 .hide{
     display: none;
 }
