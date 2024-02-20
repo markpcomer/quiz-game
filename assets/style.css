@@ -26,6 +26,11 @@ nav{
     color: var(--main-purple);
 }
 
+#high-score{
+    color: var(--main-purple);
+    background-color: var(--white);
+}
+
 #container{
     display: flex;
     flex-direction: column;
@@ -90,7 +95,9 @@ button{
     background-color: var(--light-purple);
 }
 
-
+#lineBreak{
+    border-bottom: 3px solid gray;
+}
 
 .hide{
     display: none;

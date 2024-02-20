@@ -34,7 +34,7 @@ var question = [
     answer: "25",
   },
   {
-    question: "How many official James Bond actors are there?",
+    question: "How many official James Bond actors have there been?",
     choices: ["5", "6", "7", "8"],
     answer: "6",
   },
@@ -46,13 +46,19 @@ var question = [
 ];
 
 var startGameEl = document.querySelector("#start-game");
+var highScoreBtn = document.querySelector("#high-score");
 var questions = document.querySelector("#questions");
 var intro = document.querySelector("#intro");
 var questionEl = document.querySelector("#question");
 var choicesEl = document.querySelector("#choices");
 var resultEl = document.querySelector("#result");
-
+var lineBreakEl = document.querySelector("#line-break");
 var timerEl = document.querySelector("#timer");
+var inputFormEl = document.querySelector("#input-form");
+var inputInitialsEl = document.querySelector("#input-initials");
+var highScoreSectionEl = document.querySelector("#high-score-section");
+
+
 var timer = 15;
 var questionIndex = 0;
 var score = 0;
@@ -72,6 +78,7 @@ function startGame() {
   intro.setAttribute("class", "hide");
   questions.setAttribute("class", "show");
   timerEl.setAttribute("class", "show");
+  lineBreakEl.setAttribute("class", "show");
   updateQuestion();
   startTimer();
 }
@@ -92,16 +99,17 @@ function updateQuestion() {
     }
 }
 
-
 function endGame() {
     questions.setAttribute("class", "hide");
     timerEl.setAttribute("class", "hide");
+    lineBreakEl.setAttribute("class", "show");
+    inputFormEl.setAttribute("class", "show");
+    highScoreSectionEl.setAttribute("class", "show");
     resultEl.textContent = `Oh Mr. Bond, your final score is ${score}.`; 
 }
 
 choicesEl.addEventListener("click", function (event) {
     var target = event.target;
-
     if (target.matches("li")) {
       if (target.textContent === question[questionIndex].answer) {
         resultEl.textContent = "Right idea, Mr. Bond. For once...";
@@ -111,9 +119,7 @@ choicesEl.addEventListener("click", function (event) {
         resultEl.textContent = "You amuse me, Mr. Bond. And time is running out.";
         timer = timer - 5;
     }
-
     questionIndex++;
-
     setTimeout(updateQuestion, 1000);
   }
 });
