@@ -3,50 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="./assets/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
-    <title>Quiz Game</title>
+    <title>007 Quiz Game</title>
 </head>
 <body>
     <header>
-        <nav>
-            <button id="high-score">High Scores</button>
+        <div>
+        <!--Changed <nav> to <div> -->
+            <nav id="high-score"><a href="highscores.html">Click Here to View High Scores</a></nav>
+
+            <!-- Changed <button> to <nav> -->
             <div id="timer">You have 15 Seconds left, Mr. Bond</div>
-        </nav>
+        </div>
     </header>
+
     <div id="container">
-        <section id="intro">
+        <section id="intro" class="start">
             <h1>Welcome to the 007 Quiz Game</h1>
             <p>Good evening, Mr. Bond. I give you a test. Every time you answer incorrectly, I subtract time. <br>Answer my questions quickly...<strong><br><i>OR ELSE!</i></strong></p>
             <button id="start-game">Begin Your Mission</button>
         </section>
+
         <div id="questions" class="hide">
-            <h2 id="question"></h2>
-            <ul id="choices"></ul>
+            <h2 id="question-title"></h2>
+            <ul id="choices" class="choices"></ul>
             <h2 class="hide">Your Final Score Is <span id="final-score"></span></h2>
             <br id="line-break">
         </div>
+
         <div id="result"></div>
         <form id="input-form" class="hide">
             <p>Enter Your Initials <input id="input-initials"></p>
             <button id="input-initials-btn">Submit</button>
         </form>
-        <div id="high-score-section" class="hide">
+        <!-- <div id="high-score-section" class="hide">
             <h2>High Scores</h2>
             <div id="high-scores-list"></div>
             <p>
                 <button id="go-back-btn" type="submit">Go Back</button>
                 <button id="clear-high-score-btn" type="submit">Clear High Scores</button>
             </p>
-        </div>
+        </div> -->
     </div>
-    <script src="./assets/script.js"></script>
+    
+    <script src="./assets/questions.js"></script>
+    <script src="./assets/logic.js"></script>
 </body>
 </html>
-
-<!--
-    
-
--->
