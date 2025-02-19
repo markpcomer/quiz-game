@@ -29,7 +29,7 @@ const updateTimer = () => {
         timer;
         timerEl.textContent = `You have ${timer} second remaining, Mr. Bond...`
     } else {
-        endGame();
+        endQuiz();
     }
 };
 
@@ -38,11 +38,60 @@ const startTimer = () => {
 };
 
 // 2. Start Quiz Function
-function startQuiz() {
+const startQuiz = () => {
     intro.setAttribute("class", "hide");
     questions.setAttribute("class", "show");
-    
+    timerEl.setAttribute("class", "show");
+    lineBreakEl.setAttribute("class", "show");
+    updateQuestion();
+    startTimer();
 }
+
+const updateQuestion =() => {
+    choicesEl.innerHTML = " ";
+    resultEl.innerHTML = " ";
+    if (questionIndex === question.length) {
+        setTimeout(endGame);
+        return;
+    }
+    questionEl.textContent = question[questionIndex].question;
+
+    for (let i = 0; i < question[questionIndex].choices.length; i++) {
+        let element = document.createElement("li");
+        element.textContent = question[questionIndex].choices[i];
+        choicesEl.appendChild(element);
+    }
+};
+
+const endQuiz = () => {
+    questions.setAttribute("class", "hide");
+    timerEl.setAttribute("class", "hide");
+
+    lineBreakEl.setAttribute("class", "show");
+    inputFormEl.setAttribute("class", "show");
+    highScoreSectionEl.setAttribute("class", "show");
+
+    resultEl.textContent = `Oh Mr. Bond, your final score is ${score}.`;
+
+}
+
+choicesEl.addEventListener("click", function (event) {
+        const target = event.target;
+
+        if (target.matches("li")) {
+            if (target.textContent = question[questionIndex].answer) {
+                resultEl.textContent = "Right idea, Mr. Bond. For once..."
+            } else {
+                resultEl.textContent = "You amuse me, Mr. Bond. And time is running out...";
+                timer = timer - 5;
+            }
+            questionIndex++;
+            setTimeout(updateQuestion, 1000);
+        }
+    });
+
+startGameEl.addEventListener("click", startQuiz);
+
 //    - Hide the start screen.
 //    - Show the questions section.
 //    - Start the timer with an interval that triggers every second.
