@@ -3,7 +3,7 @@ var startGameEl = document.querySelector("#start-game"); // Start game button el
 var highScoreBtn = document.querySelector("#high-score"); // High score button (unused in this snippet)
 var questions = document.querySelector("#questions"); // Questions container element
 var intro = document.querySelector("#intro"); // Intro section (before game starts)
-var questionEl = document.querySelector("#question"); // Question display element
+var questionEl = document.querySelector("#questions"); // Question display element
 var choicesEl = document.querySelector("#choices"); // List element for the choices
 var resultEl = document.querySelector("#result"); // Result element (displays feedback)
 var lineBreakEl = document.querySelector("#line-break"); // Line break element to be used between sections
@@ -50,19 +50,19 @@ function updateQuestion() {
   resultEl.innerHTML = " ";
 
   // Check if there are no more questions to show (end of the question list)
-  if (questionIndex === question.length) {
+  if (questionIndex === questions.length) {
     // Call the endGame function after a brief delay (1000ms)
     setTimeout(endGame, 1000);
     return; // Exit the function as there are no more questions
   }
 
   // Set the current question text
-  questionEl.textContent = question[questionIndex].question;
+  questionEl.textContent = questions[questionIndex].questions;
 
   // Loop through the choices for the current question and display them as list items
-  for (var i = 0; i < question[questionIndex].choices.length; i++) {
+  for (var i = 0; i < questions[questionIndex].choices.length; i++) {
     var element = document.createElement("li"); // Create a new list item element
-    element.textContent = question[questionIndex].choices[i]; // Set the text content to the current choice
+    element.textContent = questions[questionIndex].choices[i]; // Set the text content to the current choice
     choicesEl.appendChild(element); // Add the new list item to the choices section
   }
 }
@@ -89,7 +89,7 @@ choicesEl.addEventListener("click", function (event) {
   // Check if the clicked target is a list item (which would be one of the choices)
   if (target.matches("li")) {
     // If the choice matches the correct answer, increment the score
-    if (target.textContent === question[questionIndex].answer) {
+    if (target.textContent === questions[questionIndex].answer) {
       resultEl.textContent = "Right idea, Mr. Bond. For once...";
       score++; // Increment score for correct answer
     } else {
