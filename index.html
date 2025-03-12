@@ -12,44 +12,37 @@
 </head>
 
 <body>
-    <header>
-        <div>
-        <!--Changed <nav> to <div> -->
-            <nav id="high-score"><a href="highscores.html">Click Here to View High Scores</a></nav>
-
-            <!-- Changed <button> to <nav> -->
-            <div id="timer">You have 30 Seconds left, Mr. Bond</div>
+    <div>
+        <div class="scores">
+            <a href="highscores.html">Click Here to View High Scores</a>
         </div>
-    </header>
 
-    <div id="container">
-        <section id="intro" class="start">
+        <div class="timer">You have <span id="time">30</span> Seconds left, Mr. Bond</div>
+    </div>
+
+    <div id="wrapper">
+        <div id="start-screen" class="start">
             <h1>Welcome to the 007 Quiz Game</h1>
-            <p>Good evening, Mr. Bond. I give you a test. Every time you answer incorrectly, I subtract time. <br>Answer my questions quickly...<strong><br><i>OR ELSE!</i></strong></p>
-            <button id="start-game">Begin Your Mission</button>
-        </section>
+            <p>Good evening, Mr. Bond. I give you a test. Every time you answer incorrectly, I subtract time. 
+                <br>Answer my questions quickly...<strong><br><i>OR ELSE!</i></strong></p>
+            <button id="start">Begin Your Mission</button>
+        </div>
 
         <div id="questions" class="hide">
             <h2 id="question-title"></h2>
             <ul id="choices" class="choices"></ul>
-            <h2 class="hide">Your Final Score Is <span id="final-score"></span></h2>
-            <br id="line-break">
         </div>
 
-        <div id="result"></div>
-        <form id="input-form" class="hide">
-            <p>Enter Your Initials <input id="input-initials"></p>
-            <button id="input-initials-btn">Submit</button>
-        </form>
-
-        <div id="high-score-section" class="hide">
-            <h2>High Scores</h2>
-            <div id="high-scores-list"></div>
-            <p>
-                <button id="go-back-btn" type="submit">Go Back</button>
-                <button id="clear-high-score-btn" type="submit">Clear High Scores</button>
+        <div id="end-screen" class="hide">
+            <h2>Why can't you be a good boy and die.</h2>
+            <p>Your final score is <span id="final-score"></span>.</p>
+            <p>Enter your initials, your REAL initials: 
+                <input type="text" id="initials" max="3" />
+                <button id="submit">Submit</button>
             </p>
-        </div> 
+        </div>
+
+        <div id="feedback" class="feedback hide"></div>
     </div>
     
     <script src="./assets/questions.js"></script>

@@ -2,7 +2,7 @@
 function printHighscores() {
     //    - Retrieve the saved high scores from localStorage (if available), or use an empty array if not.
 
-    const highscores = JSON.parse(window.localStorage.getItem('high-scores')) || [];
+    const highscores = JSON.parse(window.localStorage.getItem('highscores')) || [];
 
     highscores.sort(function (a,b) {
         return b.score - a.score;
@@ -15,6 +15,7 @@ function printHighscores() {
         let scoresList = document.getElementById("high-score");
         scoresList.appendChild(liScore);
     }
+    console.log(highscores);
 };
 
 function clearHighscores() {

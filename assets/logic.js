@@ -1,198 +1,120 @@
-// 1. Initialize Variables
-//    - Set up variables to track the current question, time, and timer state.
-//    - Reference DOM elements (questions, timer, choices, submit button, start button, initials, feedback, etc.).
-//    - Set up sound effects for correct and incorrect answers.
 
+let currentQuestionIndex = 0;
+let time = questionsArray.length * 15;
+let timerId;
 
-const startGameEl = document.getElementById("start-game");
-const highScoreBtn = document.getElementById("high-score");
-let questions = document.getElementById("questions");
-const intro = document.getElementById("intro");
-let questionEl = document.getElementById("question-title");
-let choicesEl = document.getElementById("choices");
-let resultEl = document.getElementById("result");
-const lineBreakEl = document.getElementById("line-break");
-let timerEl = document.getElementById("timer");
-const inputFormEl = document.getElementById("input-form");
-const inputInitialsEl = document.getElementById("input-initials");
-const inputInitialsBtn = document.getElementById("input-initials-btn");
-const highScoreSectionEl = document.getElementById("high-score-section");
+const questionsEl = document.getElementById('questions');
+const timerEl = document.getElementById('time');
+const choicesEl = document.getElementById('choices');
+const submitBtn = document.getElementById('submit');
+const startBtn = document.getElementById('start');
+const initialsEl = document.getElementById('initials');
+const feedbackEl = document.getElementById('feedback');
 
-let timer = 30;
-let questionIndex = 0;
-let score = 0;
-let timerInterval;
+function startQuiz() {
+    const startScreenEl = document.getElementById('start-screen');
+    startScreenEl.setAttribute('class', 'hide');
 
-// const updateTimer = () => {
-//     if (timer > 1) {
-//         timer--;
-//         timerEl.textContent = `You have ${timer} seconds remaining, Mr. Bond...`;
-//     } else if (timer === 1) {
-//         timer;
-//         timerEl.textContent = `You have ${timer} second remaining, Mr. Bond...`
-//     } else if (timer === 0) {
-//         clearInterval(timer);
-//         endQuiz();
-//     }
-// };
+    questionsEl.removeAttribute('class');
 
-// const startTimer = () => {
-//     setInterval(updateTimer, 1000);
-// };
+    timerId = setInterval(clockTick, 1000);
 
-function startTimer() {
-    timerInterval = setInterval(function () {
-        if (timer > 0) {
-            timer--;
-            timerEl.textContent = `You have ${timer} seconds left, Mr. Bond.`;
-        } else if (timer === 1) {
-            timer--;
-            timerEl.textContent = `You have ${timer} second left, Mr. Bond.`;
-        } else if (timer <= 0) {
-            clearInterval(timerInterval);
-            endQuiz();
-        }
-    }, 1000)
+    timerEl.textContent = time;
+
+    getQuestion();
 };
 
+function getQuestion() {
+    let currentQuestion = questionsArray[currentQuestionIndex];
 
-// 2. Start Quiz Function
-const startQuiz = () => {
-    intro.setAttribute("class", "hide");
-    questions.setAttribute("class", "show");
-    timerEl.setAttribute("class", "show");
-    lineBreakEl.setAttribute("class", "show");
-    updateQuestion();
-    startTimer();
-}
+    const titleEl = document.getElementById('question-title');
+    titleEl.textContent = currentQuestion.title;
 
-console.log(question);
-console.log(questionEl);
+    choicesEl.innerHTML = '';
 
-const updateQuestion = () => {
-    console.log(question);
+    for (let i = 0; i < currentQuestion.choices.length; i++) {
+        let choice = currentQuestion.choices[i];
+        let choiceNode = document.createElement('button');
+        choiceNode.setAttribute('class', 'choice');
+        choiceNode.setAttribute('value', choice);
 
-    choicesEl.innerHTML = " ";
-    resultEl.innerHTML = " ";
+        choiceNode.textContent = i + 1 + '. ' + choice;
 
-    if (questionIndex === question.length) {
-        setTimeout(endQuiz, 1000);
+        choicesEl.appendChild(choiceNode);
+    }
+};
+
+function questionClick(event) {
+    const buttonEl = event.target;
+    if (!buttonEl.matches('.choice')) {
         return;
     }
-    questionEl.textContent = question[questionIndex].question;
-    console.log("questionEl outside of loop", questionEl);
+    if (buttonEl.value !== questionsArray[currentQuestionIndex].answer) {
+        time -= 15;
+        if (time < 0) {
+            time = 0;
+        }
+        timerEl.textContent = time;
 
-    for (let i = 0; i < question[questionIndex].choices.length; i++) {
-        let element = document.createElement("li");
-        element.textContent = question[questionIndex].choices[i];
-        choicesEl.appendChild(element);
-        
+        feedbackEl.textContent = 'Tsk, tsk, Mr. Bond. Incorrect...';
+    } else {
+        feedbackEl.textContent = 'You are correct, Mr. Bond. For once...';
+    }
+    feedbackEl.setAttribute('class', 'feedback');
+    setTimeout(function() {
+        feedbackEl.setAttribute('class', 'feedback hide');
+    }, 1000);
+    currentQuestionIndex++;
+    if (time <= 0 || currentQuestionIndex === questionsArray.length) {
+        endQuiz();
+    } else {
+        getQuestion();
     }
 };
 
-const endQuiz = () => {
-    clearInterval(timerInterval);
+function endQuiz() {
+    clearInterval(timerId);
+    const endScreenEl = document.getElementById('end-screen');
+    endScreenEl.removeAttribute('class');
+    const finalScoreEl = document.getElementById('final-score');
+    finalScoreEl.textContent = time;
+    questionsEl.setAttribute('class', 'hide');
+};
 
-    questions.setAttribute("class", "hide");
-    timerEl.setAttribute("class", "hide");
-
-    lineBreakEl.setAttribute("class", "show");
-    inputFormEl.setAttribute("class", "show");
-    highScoreSectionEl.setAttribute("class", "show");
-
-    
-
-    resultEl.textContent = `Oh Mr. Bond, your final score is ${score}.`;
-
-}
+function clockTick() {
+    time--;
+    timerEl.textContent = time;
+    if (time <= 0) {
+        endQuiz();
+    }
+};
 
 function saveHighscore() {
-    let initials = inputInitialsEl.value.trim();
-
+    let initials = initialsEl.value.trim();
     if (initials !== '') {
-        let highscores = JSON.parse(window.localStorage.getItem("high-scores")) || [];
+        const highscores = JSON.parse(window.localStorage.getItem('highscores')) || [];
 
         let newScore = {
-            score: timer,
-            initials: initials
-        }
+            score: time,
+            initials: initials,
+        };
         highscores.push(newScore);
-        window.localStorage.setItem('high-scores', JSON.stringify(highscores));
-        window.location.href = 'highscores.html';
+        window.localStorage.setItem('highscores', JSON.stringify(highscores));
+        window.location.href('highscores.html');
     }
-}
+};
 
 function checkForEnter(event) {
     if (event.key === 'Enter') {
         saveHighscore();
     }
-}
+};
 
-inputInitialsBtn.onclick = saveHighscore;
-inputInitialsEl.onkeyup = checkForEnter;
+submitBtn.onclick = saveHighscore;
 
-choicesEl.addEventListener("click", function (event) {
-        const target = event.target;
+startBtn.onclick = startQuiz;
 
-        if (target.matches("li")) {
-            if (target.textContent === question[questionIndex].answer) {
-                resultEl.textContent = "Right idea, Mr. Bond. For once...";
-                score++;
-            } else {
-                resultEl.textContent = "You amuse me, Mr. Bond. And time is running out...";
-                timer = timer - 5;
-            }
-            questionIndex++;
-            setTimeout(updateQuestion, 1000);
-        }
-    });
+choicesEl.onclick = questionClick;
 
-startGameEl.addEventListener("click", startQuiz);
+initialsEl.onkeyup = checkForEnter;
 
-//    - Hide the start screen.
-//    - Show the questions section.
-//    - Start the timer with an interval that triggers every second.
-//    - Display the initial time.
-
-// 3. Get Question Function
-//    - Get the current question from the array.
-//    - Update the title with the current question.
-//    - Clear old choices on the page.
-//    - Loop through each choice, create a button for each, and display them on the page.
-
-// 4. Question Click Function
-//    - When a choice is clicked:
-//      - Check if the clicked element is a choice button.
-//      - If wrong, decrease the time by 15 seconds, update the timer, and play the wrong sound.
-//      - If correct, play the right sound.
-//      - Display feedback (correct/wrong) briefly.
-//      - Move to the next question.
-//    - If all questions are finished or time is up, end the quiz.
-
-// 5. End Quiz Function
-//    - Stop the timer.
-//    - Display the end screen and show the final score.
-//    - Hide the questions section.
-
-// 6. Timer Function (Clock Tick)
-//    - Decrease the time by 1 second.
-//    - Update the displayed time.
-//    - If time runs out, end the quiz.
-
-// 7. Save Highscore Function
-//    - Get initials from the input field.
-//    - Ensure the initials are not empty.
-//    - Retrieve saved scores from localStorage or use an empty array.
-//    - Create a new score object with the current score and initials.
-//    - Save the new score in localStorage.
-//    - Redirect the user to the high scores page.
-
-// 8. Check for Enter Function
-//    - If the Enter key is pressed, call the saveHighscore function.
-
-// 9. Event Listeners
-//    - Set up event listeners for:
-//      - Submit button (calls saveHighscore).
-//      - Start button (starts the quiz).
-//      - Choices container (handles question selection).
-//      - Keyup event on initials input (checks for Enter key).
